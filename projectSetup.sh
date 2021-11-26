@@ -22,5 +22,8 @@ oc policy add-role-to-user admin system:serviceaccount:mark-pipeline-demo:pipeli
 oc apply -f 01-workspace-pvc.yaml
 oc apply -f 02-pipeline.yaml
 
+# Deploy sonarqube in the mark-pipeline-demo project
+oc apply -k cicd-tools
+
 # Start the pipeline
 oc create -f build-and-rollout-pipeline-run.yaml
