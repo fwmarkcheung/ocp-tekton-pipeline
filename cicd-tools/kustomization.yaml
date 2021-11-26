@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: mark-pipeline-demo
+
+# Deploy pre-configured SonarQube and Nexus from Red Hat Canada demo catalog.
+bases:
+#  - github.com/redhat-cop/gitops-catalog/nexus2/base?ref=main
+  - github.com/redhat-cop/gitops-catalog/sonarqube8/overlays/plugins?ref=main

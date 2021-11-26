@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  greeter.prefix: Hello
+  msg.prefix: Test Msg
+  spring.profiles.active: prod
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: my-config

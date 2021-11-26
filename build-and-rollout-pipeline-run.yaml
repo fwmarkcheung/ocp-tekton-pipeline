@@ -1,0 +1,22 @@
+kind: PipelineRun
+apiVersion: tekton.dev/v1beta1
+metadata:
+  generateName: build-and-rollout-run-
+spec:
+  pipelineRef:
+    name: mark-demo-pipeline
+  params:
+    - name: "APP_NAME"
+      value: "mark-demo"
+
+  # serviceAccountName: pipeline
+  # serviceAccountNames:
+  #   - taskName: create-dev-config-map
+  #     serviceAccountName: openshift-client-sa
+
+  workspaces:
+    - name: app-source
+      persistentVolumeClaim:
+        claimName: app-source-pvc
+    - name: maven-settings
+      emptyDir: {}
