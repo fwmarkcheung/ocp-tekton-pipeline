@@ -129,6 +129,6 @@ spec:
     #     kind: ClusterTask
     #     name: openshift-client
 
-  # workspaces:
-  #   - name: app-source
-  #   - name: maven-settings
+  workspaces:
+    - name: app-source
+    - name: maven-settings
