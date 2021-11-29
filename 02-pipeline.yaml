@@ -55,7 +55,7 @@ spec:
         - name: source
           workspace: app-source
         - name: maven-settings
-          workspace: maven-settings
+          workspace: maven-settings-cm
     - name: build-image
       params:
         - name: IMAGE
@@ -131,4 +131,4 @@ spec:
 
   workspaces:
     - name: app-source
-    - name: maven-settings
+    - name: maven-settings-cm

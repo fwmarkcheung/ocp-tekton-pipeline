@@ -20,4 +20,4 @@ spec:
         claimName: app-source-pvc
     - name: maven-settings-cm
       configMap:
-        name: maven-settings-cm                              
+        name: maven-settings-cm
