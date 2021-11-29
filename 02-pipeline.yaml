@@ -37,6 +37,8 @@ spec:
       workspaces:
         - name: output
           workspace: app-source
+        - name: maven-settings
+          workspace: maven-settings-cm
     - name: build-and-test
       params:
         - name: GOALS
@@ -127,6 +129,6 @@ spec:
     #     kind: ClusterTask
     #     name: openshift-client
 
-  workspaces:
-    - name: app-source
-    - name: maven-settings
+  # workspaces:
+  #   - name: app-source
+  #   - name: maven-settings

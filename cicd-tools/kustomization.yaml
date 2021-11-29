@@ -3,6 +3,18 @@ kind: Kustomization
 
 namespace: mark-pipeline-demo
 
+# Generator options.
+generatorOptions:
+  labels:
+    app: maven-settings
+  disableNameSuffixHash: true
+
+# Create a ConfigMap from custom settings.xml file.
+configMapGenerator:
+  - name: maven-settings-cm
+    files:
+      - settings.xml                       
+
 # Deploy pre-configured SonarQube and Nexus from Red Hat Canada demo catalog.
 bases:
 #  - github.com/redhat-cop/gitops-catalog/nexus2/base?ref=main
