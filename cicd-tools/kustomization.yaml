@@ -11,9 +11,9 @@ generatorOptions:
 
 # Create a ConfigMap from custom settings.xml file.
 configMapGenerator:
-  - name: maven-settings-cm
+  - name: maven-settings
     files:
-      - settings.xml                       
+      - settings.xml
 
 # Deploy pre-configured SonarQube and Nexus from Red Hat Canada demo catalog.
 bases:

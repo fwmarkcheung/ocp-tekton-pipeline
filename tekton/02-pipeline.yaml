@@ -37,25 +37,44 @@ spec:
       workspaces:
         - name: output
           workspace: app-source
-        - name: maven-settings
-          workspace: maven-settings-cm
-    - name: build-and-test
+
+    - name: mvn-build
+      taskRef:
+        name: maven
+        kind: Task
+      runAfter:
+        - git-clone
       params:
         - name: GOALS
           value: ["clean", "package", "sonar:sonar"]
-            # - package
-        # - name: PROXY_PROTOCOL
-        #   value: http
-      runAfter:
-        - git-clone
-      taskRef:
-        kind: ClusterTask
-        name: maven
+        - name: MAVEN_REPO_CONFIG_SECRET
+          value: sonar-secret
+
+
       workspaces:
         - name: source
           workspace: app-source
         - name: maven-settings
-          workspace: maven-settings-cm
+          workspace: maven-settings
+
+    # - name: build-and-test
+    #   params:
+    #     - name: GOALS
+    #       value: ["clean", "package", "sonar:sonar"]
+    #         # - package
+    #     # - name: PROXY_PROTOCOL
+    #     #   value: http
+    #   runAfter:
+    #     - git-clone
+    #   taskRef:
+    #     kind: ClusterTask
+    #     name: maven
+    #   workspaces:
+    #     - name: source
+    #       workspace: app-source
+    #     - name: maven-settings
+    #       workspace: maven-settings
+
     - name: build-image
       params:
         - name: IMAGE
@@ -71,14 +90,14 @@ spec:
         - name: FORMAT
           value: oci
       runAfter:
-        - build-and-test
+        - mvn-build
       taskRef:
         kind: ClusterTask
         name: buildah
       workspaces:
         - name: source
           workspace: app-source
-
+  
     - name: tag-dev
       taskRef:
         name: openshift-client
@@ -131,4 +150,4 @@ spec:
 
   workspaces:
     - name: app-source
-    - name: maven-settings-cm
+    - name: maven-settings

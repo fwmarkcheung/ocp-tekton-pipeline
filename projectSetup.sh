@@ -19,11 +19,16 @@ oc apply -f prod -R
 oc project mark-pipeline-demo
 oc policy add-role-to-user admin system:serviceaccount:mark-pipeline-demo:pipeline -n mark-config-map-dev
 oc policy add-role-to-user admin system:serviceaccount:mark-pipeline-demo:pipeline -n mark-config-map-prod
-oc apply -f 01-workspace-pvc.yaml
-oc apply -f 02-pipeline.yaml
+oc apply -k tekton
+
+# oc apply -f 01-workspace-pvc.yaml
+# oc apply -f 02-pipeline.yaml
 
 # Deploy sonarqube in the mark-pipeline-demo project
 oc apply -k cicd-tools
 
 # Start the pipeline
+# Need to make sure the sonar server is listening before running
+sleep 60
+
 oc create -f build-and-rollout-pipeline-run.yaml
