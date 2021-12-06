@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mark-demo
-        image: image-registry.openshift-image-registry.svc:5000/mark-pipeline-demo/mark-demo:dev
+        image: mark-demo:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
