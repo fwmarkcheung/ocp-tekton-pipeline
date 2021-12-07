@@ -46,17 +46,51 @@ spec:
         - git-clone
       params:
         - name: GOALS
-          value: ["clean", "package", "sonar:sonar"]
+          value: ["clean", "compile"]
         - name: MAVEN_REPO_CONFIG_SECRET
           value: sonar-secret
-
-
       workspaces:
         - name: source
           workspace: app-source
         - name: maven-settings
           workspace: maven-settings
 
+    - name: mvn-package-and-unit-test
+      taskRef:
+        name: maven
+        kind: Task
+      runAfter:
+        - mvn-build
+      params:
+        - name: GOALS
+          value: ["package"]
+        - name: MAVEN_REPO_CONFIG_SECRET
+          value: sonar-secret
+      workspaces:
+        - name: source
+          workspace: app-source
+        - name: maven-settings
+          workspace: maven-settings
+
+    - name: mvn-code-analysis
+      taskRef:
+        name: maven
+        kind: Task
+      runAfter:
+        - mvn-build
+      params:
+        - name: GOALS
+          value: ["sonar:sonar"]
+        - name: MAVEN_REPO_CONFIG_SECRET
+          value: sonar-secret
+      workspaces:
+        - name: source
+          workspace: app-source
+        - name: maven-settings
+          workspace: maven-settings
+
+    # Above tasks can be simplified with the following single task
+    # Using the above tasks to show parallelism to speed up pipeline run
     # - name: build-and-test
     #   params:
     #     - name: GOALS
@@ -90,14 +124,15 @@ spec:
         - name: FORMAT
           value: oci
       runAfter:
-        - mvn-build
+        - mvn-code-analysis
+        - mvn-package-and-unit-test
       taskRef:
         kind: ClusterTask
         name: buildah
       workspaces:
         - name: source
           workspace: app-source
-  
+
     - name: tag-dev
       taskRef:
         name: openshift-client
@@ -136,17 +171,6 @@ spec:
       taskRef:
         kind: ClusterTask
         name: openshift-client
-
-
-    # - name: redeploy
-    #   params:
-    #     - name: SCRIPT
-    #       value: oc rollout restart deployment/$(params.APP_NAME)
-    #   runAfter:
-    #     - build-image
-    #   taskRef:
-    #     kind: ClusterTask
-    #     name: openshift-client
 
   workspaces:
     - name: app-source
