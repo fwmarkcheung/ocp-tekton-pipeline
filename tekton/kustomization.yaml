@@ -8,5 +8,5 @@ bases:
 
 resources:
   - 01-workspace-pvc.yaml
-  - 01-sonar-secret.yaml
+#  - 01-sonar-secret.yaml
   - 02-pipeline.yaml

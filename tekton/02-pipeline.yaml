@@ -48,7 +48,7 @@ spec:
         - name: GOALS
           value: ["clean", "compile"]
         - name: MAVEN_REPO_CONFIG_SECRET
-          value: sonar-secret
+          value: nexus-secret
       workspaces:
         - name: source
           workspace: app-source
@@ -65,7 +65,7 @@ spec:
         - name: GOALS
           value: ["package"]
         - name: MAVEN_REPO_CONFIG_SECRET
-          value: sonar-secret
+          value: nexus-secret
       workspaces:
         - name: source
           workspace: app-source
@@ -82,7 +82,7 @@ spec:
         - name: GOALS
           value: ["sonar:sonar"]
         - name: MAVEN_REPO_CONFIG_SECRET
-          value: sonar-secret
+          value: nexus-secret
       workspaces:
         - name: source
           workspace: app-source
